@@ -148,7 +148,12 @@ ul {
   letter-spacing: 1px;
   box-shadow: var(--shadow-sm);
 }
-
+.header-logo {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  flex: 0 0 58px;
+}
 .brand-text {
   font-size: 14px;
   line-height: 1.12;
