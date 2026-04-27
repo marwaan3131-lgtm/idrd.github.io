@@ -11,28 +11,98 @@ const downloadCsv = document.getElementById("downloadCsv");
 
 document.getElementById("year").textContent = new Date().getFullYear();
 
+function cleanHeader(value) {
+  return value
+    .replace(/^\uFEFF/, "")
+    .trim()
+    .toLowerCase();
+}
+
+function toNumber(value) {
+  const number = Number(String(value || "").trim());
+  return Number.isFinite(number) ? number : 0;
+}
+
+function classifyPriority(score) {
+  if (score >= 75) return "Severe";
+  if (score >= 60) return "High";
+  if (score >= 40) return "Moderate";
+  return "Low";
+}
+
+function parseCSVLine(line) {
+  const result = [];
+  let current = "";
+  let insideQuotes = false;
+
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+
+    if (char === '"') {
+      insideQuotes = !insideQuotes;
+    } else if (char === "," && !insideQuotes) {
+      result.push(current.trim());
+      current = "";
+    } else {
+      current += char;
+    }
+  }
+
+  result.push(current.trim());
+  return result;
+}
+
 function parseCSV(text) {
-  const lines = text.trim().split(/\r?\n/);
-  const headers = lines[0].split(",").map(h => h.trim());
+  const lines = text
+    .trim()
+    .split(/\r?\n/)
+    .filter(line => line.trim() !== "");
+
+  const headers = parseCSVLine(lines[0]).map(cleanHeader);
 
   return lines.slice(1).map(line => {
-    const values = line.split(",").map(v => v.trim());
+    const values = parseCSVLine(line);
     const row = {};
+
     headers.forEach((header, index) => {
-      row[header] = values[index];
+      row[header] = values[index] ? values[index].trim() : "";
     });
 
+    const idpBurden = toNumber(row.idp_burden_score);
+    const drylandStress = toNumber(row.dryland_stress_score);
+    const foodSecurity = toNumber(row.food_security_pressure_score);
+    const nutritionRisk = toNumber(row.nutrition_risk_score);
+    const womenChildren = toNumber(row.women_children_vulnerability_score);
+    const pastoralMobility = toNumber(row.pastoral_mobility_disruption_score);
+
+    let overall = toNumber(row.overall_vulnerability_score);
+
+    if (!overall) {
+      overall = Math.round(
+        (0.20 * idpBurden) +
+        (0.20 * drylandStress) +
+        (0.20 * foodSecurity) +
+        (0.15 * nutritionRisk) +
+        (0.15 * womenChildren) +
+        (0.10 * pastoralMobility)
+      );
+    }
+
+    const priority = row.priority_level && row.priority_level.trim() !== ""
+      ? row.priority_level.trim()
+      : classifyPriority(overall);
+
     return {
-      region: row.region,
-      district: row.district,
-      idpBurden: Number(row.idp_burden_score),
-      drylandStress: Number(row.dryland_stress_score),
-      foodSecurity: Number(row.food_security_pressure_score),
-      nutritionRisk: Number(row.nutrition_risk_score),
-      womenChildren: Number(row.women_children_vulnerability_score),
-      pastoralMobility: Number(row.pastoral_mobility_disruption_score),
-      overall: Number(row.overall_vulnerability_score),
-      priority: row.priority_level
+      region: row.region || "Unknown",
+      district: row.district || "Unknown",
+      idpBurden,
+      drylandStress,
+      foodSecurity,
+      nutritionRisk,
+      womenChildren,
+      pastoralMobility,
+      overall,
+      priority
     };
   });
 }
@@ -40,11 +110,13 @@ function parseCSV(text) {
 async function loadData() {
   try {
     const response = await fetch(DATA_URL);
+
     if (!response.ok) {
       throw new Error(`Failed to load data file: ${DATA_URL}`);
     }
 
     const text = await response.text();
+
     rawData = parseCSV(text);
     filteredData = [...rawData];
 
@@ -52,11 +124,13 @@ async function loadData() {
     updateDashboard();
   } catch (error) {
     console.error(error);
-    alert("Dashboard data could not be loaded. Check that data/puntland-vulnerability-derived.csv exists.");
+    alert("Dashboard data could not be loaded. Check that data/puntland-vulnerability-derived.csv exists and has the correct column names.");
   }
 }
 
 function populateFilters() {
+  regionFilter.innerHTML = `<option value="All">All Regions</option>`;
+
   const regions = [...new Set(rawData.map(d => d.region))].sort();
 
   regions.forEach(region => {
@@ -88,6 +162,7 @@ function updateDashboard() {
 
 function updateKPIs() {
   const districtCount = filteredData.length;
+
   const averageRisk = districtCount
     ? Math.round(filteredData.reduce((sum, row) => sum + row.overall, 0) / districtCount)
     : 0;
