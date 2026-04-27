@@ -295,6 +295,10 @@ tbody tr:hover {
   background: #ffedd5;
   color: #9a3412;
 }
+.card.hidden-alert {
+    border-left: 6px solid #ea580c;
+    background: #fff7ed;
+}
 
 .badge.aligned {
   background: #dbeafe;
