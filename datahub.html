@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>IDDR Somalia Early Warning and Residual Vulnerability DataHub</title>
-  <p><strong>Version 1.0:</strong> IPC Gap and Residual Vulnerability Analysis</p>
+
   <link rel="stylesheet" href="datahub.css" />
 
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
@@ -17,10 +17,16 @@
 <header class="site-header">
   <div class="header-content">
     <p class="eyebrow">Institute for Displacement and Dryland Research</p>
+
     <h1>IDDR Somalia Early Warning and Residual Vulnerability DataHub</h1>
+
     <p class="subtitle">
       A policy-oriented evidence platform for IPC gap analysis, hidden vulnerability detection,
       food security stress monitoring and donor-facing early warning.
+    </p>
+
+    <p class="version-note">
+      <strong>Version 1.0:</strong> IPC Gap and Residual Vulnerability Analysis
     </p>
   </div>
 </header>
@@ -40,16 +46,14 @@
   </section>
 
   <section class="cards">
-
     <div class="card">
       <span>IPC Gap Records</span>
       <strong id="gapRecords">—</strong>
     </div>
 
-    <div class="card">
+    <div class="card hidden-alert">
       <span>Hidden Vulnerability</span>
       <strong id="hiddenCount">—</strong>
-      <div class="card hidden-alert">
     </div>
 
     <div class="card">
@@ -61,11 +65,9 @@
       <span>High Confidence</span>
       <strong id="highConfidence">—</strong>
     </div>
-
   </section>
 
   <section class="panel">
-
     <div class="panel-head">
       <div>
         <h2>IPC Gap and Residual Vulnerability Analysis</h2>
@@ -89,7 +91,6 @@
 
     <div class="table-wrap">
       <table id="gapTable">
-
         <thead>
           <tr>
             <th>Population Group</th>
@@ -105,14 +106,11 @@
         </thead>
 
         <tbody></tbody>
-
       </table>
     </div>
-
   </section>
 
   <section class="grid-two">
-
     <div class="panel">
       <h2>Population Group Gap Summary</h2>
       <p>Mean behavioural stress by population type.</p>
@@ -124,11 +122,9 @@
       <p>Distribution of residual vulnerability classifications.</p>
       <canvas id="gapChart"></canvas>
     </div>
-
   </section>
 
   <section class="panel methodology">
-
     <h2>Methodology</h2>
 
     <h3>1. Official IPC Benchmark</h3>
@@ -140,11 +136,9 @@
 
     <h3>2. Behavioural Stress Index</h3>
 
-    <pre><code>
-Behavioural Stress =
+    <pre><code>Behavioural Stress =
 (FCS Poor + HDDS Crisis + HHS Crisis +
-Livelihood Coping Crisis + rCSI Crisis) / 5
-    </code></pre>
+Livelihood Coping Crisis + rCSI Crisis) / 5</code></pre>
 
     <h3>3. IPC Gap Logic</h3>
     <p>
@@ -167,20 +161,23 @@ Livelihood Coping Crisis + rCSI Crisis) / 5
       without assigning unsupported budgets or unreferenced financing claims.
       It is a diagnostic tool for donor dialogue and programme review.
     </p>
+  </section>
 
+  <section class="panel">
+    <h3>Evidence & Data Sources</h3>
+    <ul>
+      <li><strong>Primary Data:</strong> FSNAU/FEWS NET Somalia Technical Datasets (2025).</li>
+      <li><strong>Classification Standards:</strong> IPC Technical Manual Version 3.1.</li>
+      <li><strong>Analytical Model:</strong> IDDR Residual Vulnerability Framework (Version 1.0).</li>
+    </ul>
   </section>
 
 </main>
-  
 
 <footer>
   <p>© IDDR — Institute for Displacement and Dryland Research</p>
-  <p class="updated">
-    IDDR Somalia Early Warning and Residual Vulnerability DataHub
-    <p class="updated">
-Last Updated: Gu Season 2025
-</p>
-  </p>
+  <p class="updated">IDDR Somalia Early Warning and Residual Vulnerability DataHub</p>
+  <p class="updated">Last Updated: Gu Season 2025</p>
 </footer>
 
 <script src="datahub.js"></script>
