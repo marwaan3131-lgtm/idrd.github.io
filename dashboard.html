@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Puntland IDP and Dryland Vulnerability Dashboard | IDDR</title>
+
+  <meta name="description" content="IDDR Puntland IDP and Dryland Vulnerability Dashboard: derived indicators on displacement, dryland stress, food security, nutrition vulnerability, pastoral mobility, and resilience risks." />
+
+  <link rel="stylesheet" href="dashboard.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<header class="dashboard-header">
+  <div class="header-inner">
+    <div>
+      <p class="eyebrow">IDDR Data Hub</p>
+      <h1>Puntland IDP and Dryland Vulnerability Dashboard</h1>
+      <p>
+        Derived indicators for displacement, dryland stress, food security,
+        nutrition vulnerability, pastoral mobility, and district-level
+        prioritisation in Puntland.
+      </p>
+    </div>
+
+    <div class="header-badge">
+      <strong>IDDR</strong>
+      <span>East Africa University, Somalia</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="section notice">
+  <h2>Data Use and Disclaimer</h2>
+  <p>
+    This dashboard does not reproduce or redistribute restricted raw datasets.
+    It uses publicly available secondary data to generate derived indicators,
+    composite scores, classifications, and policy-oriented visual summaries.
+    All original data sources remain the property of their producers. IDDR’s
+    contribution is limited to data cleaning, transformation, scoring,
+    classification, visualization, and interpretation.
+  </p>
+</section>
+
+<section class="section controls">
+  <div>
+    <label for="regionFilter">Filter by Region</label>
+    <select id="regionFilter">
+      <option value="All">All Regions</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="priorityFilter">Filter by Priority Level</label>
+    <select id="priorityFilter">
+      <option value="All">All Priority Levels</option>
+      <option value="Severe">Severe</option>
+      <option value="High">High</option>
+      <option value="Moderate">Moderate</option>
+      <option value="Low">Low</option>
+    </select>
+  </div>
+
+  <button id="resetFilters">Reset Filters</button>
+</section>
+
+<section class="section kpi-grid">
+  <article class="kpi-card">
+    <span id="districtCount" class="kpi-number">0</span>
+    <span class="kpi-label">Districts analysed</span>
+  </article>
+
+  <article class="kpi-card">
+    <span id="averageRisk" class="kpi-number">0</span>
+    <span class="kpi-label">Average vulnerability score</span>
+  </article>
+
+  <article class="kpi-card">
+    <span id="severeCount" class="kpi-number">0</span>
+    <span class="kpi-label">Severe priority districts</span>
+  </article>
+
+  <article class="kpi-card">
+    <span id="topDistrict" class="kpi-number small-text">-</span>
+    <span class="kpi-label">Highest-risk district</span>
+  </article>
+</section>
+
+<section class="section chart-grid">
+  <article class="chart-card">
+    <h2>Overall Vulnerability Score by District</h2>
+    <canvas id="overallChart"></canvas>
+  </article>
+
+  <article class="chart-card">
+    <h2>Priority Level Distribution</h2>
+    <canvas id="priorityChart"></canvas>
+  </article>
+</section>
+
+<section class="section chart-grid">
+  <article class="chart-card">
+    <h2>Dryland Stress vs IDP Burden</h2>
+    <canvas id="scatterChart"></canvas>
+  </article>
+
+  <article class="chart-card">
+    <h2>Average Component Scores</h2>
+    <canvas id="componentChart"></canvas>
+  </article>
+</section>
+
+<section class="section">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">District Ranking</p>
+      <h2>Derived Vulnerability Ranking</h2>
+    </div>
+
+    <button id="downloadCsv">Download Derived CSV</button>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Region</th>
+          <th>District</th>
+          <th>IDP Burden</th>
+          <th>Dryland Stress</th>
+          <th>Food Security</th>
+          <th>Nutrition Risk</th>
+          <th>Women & Children</th>
+          <th>Overall Score</th>
+          <th>Priority</th>
+        </tr>
+      </thead>
+      <tbody id="rankingTable"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="section methodology">
+  <h2>Methodology</h2>
+
+  <p>
+    The dashboard uses derived scores ranging from 0 to 100. Higher scores
+    indicate higher vulnerability or pressure. The overall vulnerability score
+    is calculated using a weighted composite index:
+  </p>
+
+  <pre>
+Overall Vulnerability Score =
+  0.20 × IDP Burden Score
++ 0.20 × Dryland Stress Score
++ 0.20 × Food Security Pressure Score
++ 0.15 × Nutrition Risk Score
++ 0.15 × Women and Children Vulnerability Score
++ 0.10 × Pastoral Mobility Disruption Score
+  </pre>
+
+  <p>
+    Priority levels are classified as follows: Severe ≥ 75, High 60–74,
+    Moderate 40–59, and Low below 40. These thresholds can be revised
+    following technical validation with government and sector experts.
+  </p>
+</section>
+
+</main>
+
+<footer class="footer">
+  <p>
+    © <span id="year"></span> Institute for Displacement and Dryland Research,
+    East Africa University, Somalia.
+  </p>
+</footer>
+
+<script src="dashboard.js"></script>
+
+</body>
+</html>
