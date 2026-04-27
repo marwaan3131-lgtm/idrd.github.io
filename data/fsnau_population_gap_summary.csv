@@ -1,0 +1,7 @@
+population_type,behavioral_stress,ipc_score,ipc_gap_score,fcspoor,hddscrisis34,hhscrisis,livcopcrisis,rcsicrisis,crisis_trigger
+IDPs,24,72,-32,19,23,38,23,17,4
+Riverine,18,100,-82,1,4,52,23,8,1
+Other,17,85,-52,2,3,41,15,26,1
+Pastoral,16,51,-24,10,14,30,14,10,3
+Urban,14,56,-31,12,14,25,9,11,3
+Agropastoral,11,65,-38,2,6,20,18,7,1
