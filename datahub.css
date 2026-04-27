@@ -1,6 +1,7 @@
 /* =========================================================
-   IDDR SOMALIA EARLY WARNING AND RESIDUAL VULNERABILITY DATAHUB
-   Professional Institutional Stylesheet
+   DATAHUB.CSS
+   IDDR Somalia Early Warning and Residual Vulnerability DataHub
+   Professional Analytical Platform Stylesheet
    ========================================================= */
 
 * {
@@ -39,8 +40,9 @@ body {
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 1.2px;
-  opacity: 0.85;
+  opacity: 0.9;
   margin-bottom: 10px;
+  font-weight: 700;
 }
 
 .site-header h1 {
@@ -283,8 +285,8 @@ tbody tr:hover {
 }
 
 .badge.low {
-  background: #fee2e2;
-  color: #991b1b;
+  background: #f3f4f6;
+  color: #374151;
 }
 
 /* Gap Logic */
